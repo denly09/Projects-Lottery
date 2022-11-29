@@ -5,7 +5,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
-  namespace :admin do
-    resources :users
+  constraints(ClientDomainConstraint.new) do
+    resources :home do
     end
+
+    constraints(AdminDomainConstraint.new) do
+      namespace :admins do
+        resources :users
+      end
+    end
+  end
 end
