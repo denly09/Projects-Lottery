@@ -10,8 +10,11 @@ Rails.application.routes.draw do
     end
 
     constraints(AdminDomainConstraint.new) do
-      namespace :admins do
+      namespace :admin, path: '' do
+        root "home#index"
+        devise_for :users, controllers: { sessions: 'admin/sessions' }
         resources :users
+        resources :home
       end
     end
   end
