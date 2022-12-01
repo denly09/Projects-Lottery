@@ -1,4 +1,7 @@
 class HomeController < ApplicationController
 
-  def index; end
+  def index
+    @user = User.client
+  end
+
 end
