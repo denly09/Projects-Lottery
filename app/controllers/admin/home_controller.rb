@@ -1,4 +1,5 @@
-class Admin::HomeController < ApplicationController
-
-  def index; end
+class Admin::HomeController < AdminController
+  def index
+    @users = User.all
+  end
 end
