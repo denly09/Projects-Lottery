@@ -6,12 +6,13 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
 
-  enum genre: { client: 0, admin: 1 }
-  validates :phone, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], countries: :ph }
-
   def validate_username
     if User.where(email: username).exists?
       errors.add(:username, :invalid)
     end
   end
+
+  enum role: { client: 0, admin: 1 }
+  validates :phone_number, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], countries: :ph }
+  mount_uploader :image, ImageUploader
 end
