@@ -2,30 +2,31 @@
 <div class="container mt-lg-5">
   <div class="row d-flex justify-content-center align-items-center h-100">
     <div class="card-body m-0">
-      <div class="card  rounded-3">
-        <div class="card-body text-warning bg-dark">
-          <div class="container">
-            <div class="container col-8 fw-bolder">
-              <p>Username: <%= current_user.username %></p>
-              <p>Email: <%= current_user.email %></p>
-              <p>Coins: <%= current_user.coins %></p>
-            </div>
-            <div class="container col-8">
-              <ul class="nav nav-pills nav-justified">
-                <li class="nav-item">
-                  <%= link_to "Cash in", "#", class: "btn btn-primary bg-info nav-link" %>
-                </li>
-              </ul>
-              <ul class="nav nav-pills nav-justified mt-3">
-                <li class="nav-item">
-                  <%= link_to "Edit", edit_user_registration_path, class: "btn btn-primary bg-info nav-link" %>
-                </li>&nbsp;&nbsp;&nbsp;
-                <li class="nav-item">
-                  <%= link_to "Address", "#", class: "btn btn-primary bg-info nav-link" %>
-                </li>
-              </ul>
+      <div class="card rounded-3">
+        <div class="card-body text-dark">
+          <div class="card">
+            <div class="card-header text-center ">
+              <h2>Profile</h2>
             </div>
             <p><%= image_tag current_user.image.url, width: "150", height: "150", class: "rounded mx-auto d-block mt-lg-3" if current_user.image.present? %></p>
+            <p>Username: <%= current_user.username %></p>
+            <p>Email: <%= current_user.email %></p>
+            <p>Coins: <%= current_user.coins %></p>
+          </div>
+          <div class="container col-8">
+            <ul class="nav nav-pills nav-justified">
+              <li class="nav-item mt-lg-5">
+                <%= link_to "Cash in", "#", class: "btn btn-primary bg-info nav-link" %>
+              </li>
+            </ul>
+            <ul class="nav nav-pills nav-justified mt-3">
+              <li class="nav-item">
+                <%= link_to "Edit", edit_user_registration_path, class: "btn btn-primary bg-info nav-link" %>
+              </li>&nbsp;&nbsp;&nbsp;
+              <li class="nav-item">
+                <%= link_to "Address", "#", class: "btn btn-primary bg-info nav-link" %>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
