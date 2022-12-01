@@ -1,0 +1,26 @@
+<nav class="navbar navbar-light bg-info fixed-top">
+  <div class="container">
+    <a class="navbar-brand"><i class="bi bi-cash-coin"></i></a>
+    <form class="d-flex p-1">
+      <button class="btn btn-outline-success mx-1 " type="submit">Coins</button>
+      <button class="btn btn-outline-success mx-1" type="submit">Claim</button>
+<!--      <button class="btn btn-outline-success mx-1" type="submit">Language</button>-->
+      <div class="btn-group">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          =
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <button class="dropdown-item" type="button">Profile</button>
+          </li>
+          <li>
+            <button class="dropdown-item" type="button"><%= link_to "Log out", destroy_user_session_path, { onclick: "return confirm('Are you sure you want to log_out?')", method: :delete, class: 'btn btn-danger'} %></button>
+          </li>
+<!--          <li>-->
+<!--            <button class="dropdown-item" type="button">Something else here</button>-->
+<!--          </li>-->
+        </ul>
+      </div>
+    </form>
+  </div>
+</nav>
