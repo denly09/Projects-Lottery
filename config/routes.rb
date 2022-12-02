@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :homes
     resource :me
 
+    resource :me do
+      resources :addresses, execpt: :show
   end
 
     constraints(AdminDomainConstraint.new) do

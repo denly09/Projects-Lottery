@@ -15,4 +15,6 @@ class User < ApplicationRecord
   enum role: { client: 0, admin: 1 }
   validates :phone_number, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], countries: :ph }
   mount_uploader :image, ImageUploader
+
+  has_many :addresses
 end
