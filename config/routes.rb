@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :homes
     resource :me do
       resources :addresses, execpt: :show
+      resources :addresses
       end
   end
 
