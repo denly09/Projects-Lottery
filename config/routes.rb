@@ -7,21 +7,23 @@ Rails.application.routes.draw do
   constraints(ClientDomainConstraint.new) do
     root to: "home#index"
     devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
-    resources :homes
     resource :me do
-      resources :addresses, execpt: :show
       resources :addresses
-      end
-  end
+    end
+    namespace :users, path: '' do
+      resources :invite_people
+    end
+    end
+
 
   constraints(AdminDomainConstraint.new) do
     namespace :admin, path: '' do
       root to: "home#index"
       devise_for :users, controllers: { sessions: 'admin/sessions' }
       resources :users
-      resources :homes
     end
   end
+
   namespace :api do
     resources :regions, only: :index, defaults: { format: :json } do
       resources :provinces, only: :index, defaults: { format: :json } do
