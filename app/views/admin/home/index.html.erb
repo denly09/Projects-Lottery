@@ -1,5 +1,6 @@
 <%= render 'layouts/adminheader' %>
-<h2>Hi! <%= current_user %></h2>
+<h2>Hi! <%= current_admin_user.email if admin_user_signed_in? %></h2>
+<%= link_to 'Admin List', admin_users_path, class: 'btn btn-outline-primary' %>
 
 
 

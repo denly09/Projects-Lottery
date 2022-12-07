@@ -19,6 +19,14 @@ class Users::SessionsController < Devise::SessionsController
   # end
 
   # protected
+  private
+  def after_sign_in_path_for(resource)
+    if current_user.admin?
+      redirect_to users_path
+    else
+      root_path
+    end
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params
