@@ -2,10 +2,10 @@
   <div class="container d-flex justify-content-center align-content-center">
     <form class="d-flex p-1">
       <button class="btn btn-outline-success px-4 mx-1 " type="submit">Share</button>
-      <button class="btn btn-outline-success px-4 mx-1" type="submit">Invite</button>
+      <%= link_to "Invite", users_invite_people_path, class: "px-4 mx-1 btn btn-outline-warning" %>
       <button class="btn btn-outline-success px-4 mx-1" type="submit">Lottery</button>
       <button class="btn btn-outline-success px-4 mx-1" type="submit">Shop</button>
-      <%= link_to "Me", me_path, class: "px-4 mx-1 btn btn-primary bg-primary" %>
+      <%= link_to "Me", me_path, class: "px-4 mx-1 btn btn-outline-warning" if user_signed_in? %>
     </form>
   </div>
 </nav>
