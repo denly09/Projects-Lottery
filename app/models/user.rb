@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  validates :username, presence: true, uniqueness: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -8,7 +7,7 @@ class User < ApplicationRecord
 
 
   enum role: { client: 0, admin: 1 }
-  validates :phone_number, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], countries: :ph }
+  validates :phone_number, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], countries: :ph }, length: { maximum: 13 }
   mount_uploader :image, ImageUploader
 
   has_many :addresses
