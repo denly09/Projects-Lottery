@@ -1,78 +1,79 @@
 <%= render 'layouts/header' %>
-  <div class="card-body">
-    <%= form_with model: @address, url: path, data: { controller: :location, turbo: false } do |form| %>
-      <div class="container  mt-lg-4">
-        <% if address.errors.any? %>
-          <ul>
-            <% address.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-        <% end %>
-        </ul>
-        <div>
-          <div class="mb-2">
-            <%= form.label :name %>
-            <%= form.text_field :name %>
-          </div>
-          <div class="mb-2">
-            <%= form.label :phone_number %>
-            <%= form.phone_field :phone_number %>
-          </div>
-
-          <div class="mb-2">
-            <%= form.label :remark %>
-            <%= form.text_area :remark %>
-          </div>
-
-          <div class="mb-2">
-            <%= form.label :genre %>
-            <%= form.select :genre, [ :home, :office ] %>
-          </div>
-
-          <div class="mb-2">
-            <%= form.label :street_address %>
-            <%= form.text_field :street_address %>
-          </div>
-
-          <%= form.label :address_region_id %>
-          <%= form.collection_select :address_region_id,
-                                     Address::Region.all, :id, :name,
-                                     { prompt: 'Select Region' },
-                                     data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces' }
-          %>
-        </div>
-        <div>
-          <%= form.label :address_province_id %>
-          <%= form.collection_select :address_province_id, [], nil, nil,
-                                     { prompt: 'Select Province/District' },
-                                     data: { location_target: 'selectProvinceId', action: 'change->location#fetchCityMunicipalities' } %>
-        </div>
-        <div>
-          <%= form.label :address_city_municipality_id %>
-          <%= form.collection_select :address_city_municipality_id, [], nil, nil,
-                                     { prompt: 'Select City/Municipality' },
-                                     data: { location_target: 'selectCityMunicipalityId', action: 'change->location#fetchBarangays' } %>
+<div class="card-body">
+  <%= form_with model: @address, url: path, data: { controller: :location, turbo: false } do |form| %>
+    <div class="container  mt-lg-4">
+      <% if address.errors.any? %>
+        <ul>
+          <% address.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+      <% end %>
+      </ul>
+      <div>
+        <div class="mb-2">
+          <%= form.label :name %>
+          <%= form.text_field :name %>
         </div>
         <div class="mb-2">
-          <%= form.label :address_barangay_id %>
-          <%= form.collection_select :address_barangay_id, [], nil, nil,
-                                     { prompt: 'Select Brgy' },
-                                     data: { location_target: 'selectBarangayId' } %>
+          <%= form.label :phone_number %>
+          <%= form.phone_field :phone_number %>
         </div>
 
         <div class="mb-2">
-          <%= form.label :is_default %>
-          <%= form.check_box :is_default %>
+          <%= form.label :remark %>
+          <%= form.text_area :remark %>
         </div>
-
 
         <div class="mb-2">
-          <%= form.submit %>
+          <%= form.label :genre %>
+          <%= form.select :genre, [:home, :office] %>
         </div>
-    </div>
+
+        <div class="mb-2">
+          <%= form.label :street_address %>
+          <%= form.text_field :street_address %>
+        </div>
+
+        <%= form.label :address_region_id %>
+        <%= form.collection_select :address_region_id,
+                                   Address::Region.all, :id, :name,
+                                   { prompt: 'Select Region' },
+                                   data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces' }
+        %>
+      </div>
+      <div>
+        <%= form.label :address_province_id %>
+        <%= form.collection_select :address_province_id, [], nil, nil,
+                                   { prompt: 'Select Province/District' },
+                                   data: { location_target: 'selectProvinceId', action: 'change->location#fetchCityMunicipalities' } %>
+      </div>
+      <div>
+        <%= form.label :address_city_municipality_id %>
+        <%= form.collection_select :address_city_municipality_id, [], nil, nil,
+                                   { prompt: 'Select City/Municipality' },
+                                   data: { location_target: 'selectCityMunicipalityId', action: 'change->location#fetchBarangays' } %>
+      </div>
+      <div class="mb-2">
+        <%= form.label :address_barangay_id %>
+        <%= form.collection_select :address_barangay_id, [], nil, nil,
+                                   { prompt: 'Select Brgy' },
+                                   data: { location_target: 'selectBarangayId' } %>
+      </div>
+
+      <div class="mb-2">
+        <%= form.label :is_default %>
+        <%= form.check_box :is_default %>
+      </div>
+
+
+      <div class="mb-2">
+        <%= form.submit %>
+  <% end %>
   </div>
+  </div>
+</div>
 
 
-    <% end %>
-    <%= render 'layouts/footer' %>
+
+<%= render 'layouts/footer' %>
 
