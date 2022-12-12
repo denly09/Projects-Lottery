@@ -1,7 +1,7 @@
 class Address < ApplicationRecord
   Address_Limit = 5
   validates :name, :genre, :street_address, presence: true
-  validates :phone, presence: true, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], countries: :ph }, length: { maximum: 13 }
+  validates :phone_number, presence: true, phone: { possible: true, allow_blank: true, types: [:voip, :mobile], countries: :ph }, length: { maximum: 13 }
   belongs_to :user
   belongs_to :region, class_name: 'Address::Region', foreign_key: 'address_region_id'
   belongs_to :province, class_name: 'Address::Province', foreign_key: 'address_province_id'
