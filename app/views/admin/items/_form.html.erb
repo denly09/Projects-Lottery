@@ -1,0 +1,62 @@
+<div class="card-body">
+  <%= form_with model: @item, url: path, data: { turbo: false } do |form| %>
+    <div class="container  mt-lg-4">
+      <% if item.errors.any? %>
+        <ul>
+          <% item.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+      <% end %>
+      </ul>
+      <div class="card-body">
+        <div class="field mb-3">
+          <%= form.label 'Upload Item' %>
+          <%= form.file_field :image, class: "form-control" %>
+        </div>
+
+        <ul class="nav nav-pills nav-justified mt-3 mb-3 text-start">
+          <li class="nav-item text-start mx-2">
+            <div class="mb-3">
+              <%= form.label :name %>
+              <%= form.text_field :name, class: "form-control", placeholder: 'Enter your name' %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :quantity %>
+              <%= form.number_field :quantity, class: "form-control", placeholder: 'Enter your quantity' %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :minimum_bets %>
+              <%= form.number_field :minimum_bets, class: "form-control", placeholder: 'Enter your minimum bet' %>
+            </div>
+          </li>
+          <li class="nav-item text-start mx-2">
+            <div class="mb-3">
+              <%= form.label :online_at %>
+              <%= form.datetime_field :online_at, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :offline_at %>
+              <%= form.datetime_field :offline_at, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :start_at %>
+              <%= form.datetime_field :start_at, class: "form-control" %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :status %>
+              <%= form.select :status, [:Inactive, :Active], class: "form-control" %>
+            </div>
+          </li>
+        </ul>
+
+        <div class="mt-3 text-center">
+          <%= form.submit 'Save', class: "btn btn-success" %>
+          <%= link_to 'Cancel', admin_items_path, class: "btn btn-secondary " %>
+        </div>
+        <div class="mb-2">
+          <%= form.submit %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>

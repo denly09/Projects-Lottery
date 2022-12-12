@@ -13,14 +13,15 @@ Rails.application.routes.draw do
     namespace :users, path: '' do
       resources :invite_people
     end
-    end
-
+  end
 
   constraints(AdminDomainConstraint.new) do
     namespace :admin, path: '' do
       root to: "home#index"
       devise_for :users, controllers: { sessions: 'admin/sessions' }
       resources :users
+      resources :items
+
     end
   end
 
