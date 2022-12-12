@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  belongs_to :parent, class_name: "User", optional: true , counter_cache: :children_members
+  has_many :children, class_name: "User", foreign_key: 'parent_id'
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -11,6 +13,8 @@ class User < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   has_many :addresses
-  belongs_to :parent, class_name: "User", optional: true , counter_cache: :children_members
-  has_many :children, class_name: "User", foreign_key: 'parent_id'
+
+
+
+
 end

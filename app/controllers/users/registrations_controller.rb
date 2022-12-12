@@ -14,6 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    cookies[:promoter]
     params[:user][:parent_id] = User.find_by_email(cookies[:promoter])&.id
     super
   end
@@ -77,7 +78,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    added_attrs = [:parent, :email, :phone_number, :password, :password_confirmation, :remember_me]
+    added_attrs = [:parent_id, :email, :phone_number, :password, :password_confirmation, :children_members, :remember_me]
     devise_parameter_sanitizer.permit(:sign_up, keys: added_attrs)
   end
 
@@ -86,6 +87,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     change = [:email, :phone_number, :password, :password_confirmation, :remember_me]
     devise_parameter_sanitizer.permit(:account_update, keys: change)
   end
+
 
 
   # The path used after sign up.
