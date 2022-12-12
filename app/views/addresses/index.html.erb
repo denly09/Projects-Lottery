@@ -30,7 +30,7 @@
                   <td></td>
                   <% end %>
                 <td><%= link_to 'Edit', edit_me_address_path(address), class: "btn btn-outline-secondary" %></td>
-                <td><%= button_to 'Delete', me_addresses_path(address), method: :delete, :onclick => "return confirm('Are you sure you want to delete?')", class: "btn btn-outline-danger" %></td>
+                <td><%= button_to 'Delete', me_address_path(address), method: :delete, :onclick => "return confirm('Are you sure you want to delete?')", class: "btn btn-outline-danger" %></td>
               </tr>
               </tbody>
             <% end %>
