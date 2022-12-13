@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
+  default_scope { where(deleted_at: nil) }
   validates :image, presence: true
   validates :name, presence: true
   validates :minimum_bets, presence: true
@@ -9,4 +10,8 @@ class Item < ApplicationRecord
   mount_uploader :image, ImageUploader
 
   enum status: { Inactive: 0, Active: 1 }
+
+  def destroy
+    update(deleted_at: Time.current)
+  end
 end
