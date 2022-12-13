@@ -1,6 +1,7 @@
 <%= render 'layouts/adminheader' %>
 <h2>Hi! <%= current_admin_user.email if admin_user_signed_in? %></h2>
 <%= link_to 'New Item', new_admin_item_path, class: 'btn btn-outline-primary' %>
+<%= link_to 'Category', new_admin_category_path, class: 'btn btn-outline-primary' %>
 
 
 

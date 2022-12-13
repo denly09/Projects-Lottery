@@ -1,9 +1,9 @@
 class Admin::ItemsController < AdminController
   # before_action :authenticate_user!, except: :index
-  before_action :set_item, only: [:edit, :destroy]
+  before_action :set_item, only: [:edit, :update, :destroy]
 
   def index
-    @items = Item.all
+    @items = Item.includes(:categories).all
   end
 
   def new
@@ -31,7 +31,11 @@ class Admin::ItemsController < AdminController
   end
 
   def destroy
-    if @item.destroy
+     @item.destroy
+     if @item.deleted_at
+       flash[:notice] = "Successfully Deleted"
+     else
+       flash[:alert] = "The item cannot be delete"
       redirect_to admin_items_path
     end
   end
@@ -43,6 +47,6 @@ class Admin::ItemsController < AdminController
 
   def item_params
     params.require(:item).permit( :image, :name, :quantity, :minimum_bets, :state,
-                                  :batch_count, :online_at, :offline_at, :start_at, :status,)
+                                  :batch_count, :online_at, :offline_at, :start_at, :status, category_ids: [])
   end
 end

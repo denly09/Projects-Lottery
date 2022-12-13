@@ -1,0 +1,3 @@
+<%= render 'layouts/adminheader' %>
+<h1>category id: <%= @category.id %></h1>
+<%= render partial: 'form', locals: { category: @category, path: admin_category_path} %>
