@@ -1,0 +1,3 @@
+<h2>Edit Address: <%= @address.user.username %></h2>
+<%= render partial: 'form', locals: { address: @address, path: users_address_path } %>
+<%= link_to 'Back', users_addresses_path %>

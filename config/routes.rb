@@ -7,10 +7,9 @@ Rails.application.routes.draw do
   constraints(ClientDomainConstraint.new) do
     root to: "home#index"
     devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
-    resource :me do
-      resources :addresses
-    end
+    resource :me
     namespace :users, path: '' do
+      resources :addresses
       resources :invite_people
     end
   end
