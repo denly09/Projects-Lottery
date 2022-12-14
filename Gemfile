@@ -51,6 +51,7 @@ gem 'carrierwave'
 gem 'rest-client'
 gem 'active_model_serializers'
 gem "rqrcode", "~> 2.0"
+gem 'aasm'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
