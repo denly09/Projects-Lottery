@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     namespace :users, path: '' do
       resources :addresses
       resources :invite_people
+
     end
   end
 
@@ -19,7 +20,9 @@ Rails.application.routes.draw do
       root to: "home#index"
       devise_for :users, controllers: { sessions: 'admin/sessions' }
       resources :users
-      resources :items
+      resources :items do
+        put :start, :pause, :end, :cancel
+      end
       resources :categories
 
     end

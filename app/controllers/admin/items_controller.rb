@@ -1,6 +1,7 @@
 class Admin::ItemsController < AdminController
   # before_action :authenticate_user!, except: :index
   before_action :set_item, only: [:edit, :update, :destroy]
+  before_action :set_event, only: [:start, :pause, :end, :cancel]
 
   def index
     @items = Item.includes(:categories).all
@@ -40,9 +41,56 @@ class Admin::ItemsController < AdminController
     end
   end
 
+  def start
+    # render json: params
+    if @item.may_start?
+      @item.start!
+      flash[:notice] = "Do you want to start?"
+      redirect_to admin_items_path
+    else
+    flash[:notice] = "You cannot start"
+    redirect_to admin_items_path
+    end
+  end
+
+  def pause
+    if @item.may_pause?
+      @item.pause!
+      flash[:notice] = "Would you like pause?"
+    else
+      flash[:notice] = "You cannot pause"
+      redirect_to admin_items_path
+    end
+  end
+
+  def end
+    if @item.may_end?
+      @item.end!
+      flash[:notice] = "Would you like to end?"
+    else
+      flash[:notice] = "You cannot end"
+      redirect_to admin_items_path
+    end
+  end
+
+  def cancel
+    if @item.may_cancel?
+      @item.cancel!
+      flash[:notice] = "Would you like to cancel?"
+    else
+      flash[:notice] = "You cannot cancel"
+      redirect_to admin_items_path
+    end
+  end
+
   private
+
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def set_event
+    @item = Item.find(params[:item_id])
   end
 
   def item_params
