@@ -17,8 +17,12 @@
         <ul class="nav nav-pills nav-justified mt-3 mb-3 text-start">
           <li class="nav-item text-start mx-2">
             <div class="mb-3">
-              <% form.label :name %>
+              <%= form.label :name %>
               <%= form.text_field :name, class: "form-control", placeholder: 'Full Name' %>
+            </div>
+            <div class="mb-3">
+              <%= form.label :category, style: "display: block" %>
+              <%= form.collection_check_boxes :category_ids, Category.all, :id, :name %>
             </div>
             <div class="mb-3">
               <%= form.label :quantity %>
@@ -42,10 +46,12 @@
               <%= form.label :start_at %>
               <%= form.datetime_field :start_at, class: "form-control" %>
             </div>
+            <p><% Item.statuses.keys.each do |status| %>
             <div class="mb-3">
-              <%= form.label :status %>
-              <%= form.select :status, [:Inactive, :Active], class: "form-control" %>
+              <%= form.radio_button :status, status %>
+              <%= form.label status.to_sym %>
             </div>
+            <% end %></p>
           </li>
         </ul>
 
@@ -53,8 +59,7 @@
           <%= form.submit 'Save', class: "btn btn-success" %>
           <%= link_to 'Cancel', admin_items_path, class: "btn btn-secondary " %>
         </div>
-        <div class="mb-2">
-          <%= form.submit %>
+
           <% end %>
         </div>
       </div>
