@@ -2,7 +2,7 @@
   <div class="container">
     <a class="navbar-brand"><i class="bi bi-cash-coin"></i></a>
     <div class="d-flex p-1">
-      <button class="btn btn-outline-success mx-1 " type="submit">Coins</button>
+        <%=  button_to current_user.coins, "", class:'btn btn-outline-success bi bi-coin' if current_user %>
       <button class="btn btn-outline-success mx-1" type="submit">Claim</button>
       <button class="btn btn-outline-success mx-1" type="submit">Language</button>
       <% if user_signed_in? %>
