@@ -1,0 +1,72 @@
+<h2><strong>Bet Lists</strong></h2>
+<div class="card text-center table-responsive">
+  <div class="card-body">
+    <%= form_tag({ url: admin_bets_path }, { method: :get }) do %>
+      <ul class="nav nav-pills nav-justified mt-3 mb-3 text-start">
+        <li class="nav-item text-start mx-2">
+          <div class="mb-3">
+            <%= label_tag 'Serial Number' %>
+            <%= text_field_tag :serial_number, '', placeholder: "Serial Number", class: "form-control" %>
+          </div>
+
+          <div>
+            <%= label_tag :state %>
+            <%= select_tag :state, options_for_select(Bet.aasm.states.map(&:name)), { prompt: 'Choose State', class: "form-control form-select" } %>
+          </div>
+        <li class="nav-item text-start mx-2">
+          <div class="mb-3">
+            <%= label_tag 'Item Name' %>
+            <%= text_field_tag :item_name, '', placeholder: "Item Name", class: "form-control" %>
+          </div>
+          <div class="mb-3">
+            <%= label_tag 'Email' %>
+            <%= text_field_tag :user_email, '', placeholder: "Email", class: "form-control" %>
+          </div>
+        </li>
+        <li class="nav-item text-start mx-2">
+          <div class="mb-3">
+            <%= label_tag 'Start at' %>
+            <%= datetime_field_tag :start, '', class: "form-control", value: params[:start] %>
+          </div>
+          <div class="mb-3">
+            <%= label_tag 'End at' %>
+            <%= datetime_field_tag :end, '', class: "form-control", value: params[:end] %>
+          </div>
+          <div class="">
+            <%= submit_tag :Search, class: "btn btn-info float-end" %>
+          </div>
+        </li>
+    <% end %>
+    </li>
+    </ul>
+  </div>
+</div>
+    <table class="table table-hover table-primary text-center">
+      <thead>
+      <th>Serial_number</th>
+      <th>Item Name</th>
+      <th>Email</th>
+      <th>Batch Count</th>
+      <th>State</th>
+      <th>Start</th>
+      <th>Action</th>
+      </thead>
+      <div class="container">
+        <% @bets.each do |bet| %>
+          <div class="table table-warning">
+            <tr>
+              <td><%= bet.serial_number %></td>
+              <td><%= bet.item.name %></td>
+              <td><%= bet.user.email %></td>
+              <td><%= bet.batch_count %></td>
+              <td>
+                <span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= bet.state %></span>
+              </td>
+              <td><%= bet.created_at %></td>
+              <td><%=  button_to 'Cancel', admin_bet_cancel_path(bet.id), method: :put, class:'btn btn-outline-warning' if bet.may_cancel? %></td>
+            </tr>
+          </div>
+        <% end %>
+      </div>
+    </table>
+
