@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     resource :me
     namespace :users, path: '' do
       resources :addresses
-      resources :invite_people
+      resources :invite_people, only: :index
+      resources :lottery, only: :index
 
     end
   end
