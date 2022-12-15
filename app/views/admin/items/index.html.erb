@@ -2,50 +2,53 @@
 <div class="container">
   <div class="container mt-5">
     <h1>Item</h1>
-    <div class="card">
-      <div class="card-body">
-        <table class="table table-hover table-primary text-center">
-          <thead>
-          <th>Item Id</th>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Quantity</th>
-          <th>Min Bets</th>
-          <th>State</th>
-          <th>Batch Count</th>
-          <th>Online</th>
-          <th>Offline</th>
-          <th>Status</th>
-          <th colspan="6">Action</th>
+    <div class="card-body">
+      <table class="table table-hover table-primary text-center">
+        <thead>
+        <th>Item Id</th>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Min Bets</th>
+        <th>State</th>
+        <th>Batch Count</th>
+        <th>Online</th>
+        <th>Offline</th>
+        <th>Start</th>
+        <th>Status</th>
+        <th colspan="6">Action</th>
 
-          </thead>
-          <% @items.each do |item| %>
-            <tbody>
-            <tr>
-              <td><%= item.id %></td>
-              <td><%= image_tag item.image.url, width: "70", height: "70", class: "rounded mx-auto d-block mt-lg-3" if item.image.present? %></td>
-              <td><%= item.name %></td>
-              <td><%= item.categories.pluck(:name).join(',') %></td>
-              <td><%= item.quantity %></td>
-              <td><%= item.minimum_bets %></td>
-              <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= item.state %></span></td>
-              <td><%= item.batch_count %></td>
-              <td><%= item.online_at %></td>
-              <td><%= item.offline_at %></td>
-              <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= item.status %></span></td>
-              <td><%= button_to 'Start', admin_item_start_path(item.id), method: :put %></td>
-              <td><%= button_to 'Pause', admin_item_pause_path(item.id), method: :put if item.may_pause? %></td>
-              <td><%= button_to 'End', admin_item_end_path(item.id),method: :put if item.may_end? %></td>
-              <td><%= button_to 'Cancel', admin_item_cancel_path(item.id), method: :put if item.may_cancel? %></td>
-               <td><%= link_to 'Edit', edit_admin_item_path(item), class: "btn btn-outline-secondary" %></td>
-              <td><%= button_to 'Delete', admin_item_path(item), method: :delete, :onclick => "return confirm('Are you sure you want to delete?')", class: "btn btn-outline-danger" %></td>
-            </tr>
-            </tbody>
-          <% end %>
-        </table>
-        <%= link_to 'New Item', new_admin_item_path, class: "btn btn-dark float-end" %>
-      </div>
+        </thead>
+        <% @items.each do |item| %>
+          <tbody>
+          <tr>
+            <td><%= item.id %></td>
+            <td><%= image_tag item.image.url, width: "70", height: "70", class: "rounded mx-auto d-block mt-lg-3" if item.image.present? %></td>
+            <td><%= item.name %></td>
+            <td><%= item.categories.pluck(:name).join(',') %></td>
+            <td><%= item.quantity %></td>
+            <td><%= item.minimum_bets %></td>
+            <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= item.state %></span>
+            </td>
+            <td><%= item.batch_count %></td>
+            <td><%= item.online_at %></td>
+            <td><%= item.offline_at %></td>
+            <td><%= item.start_at %></td>
+            <td>
+              <span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= item.status %></span>
+            </td>
+            <td><%= button_to 'Start', admin_item_start_path(item.id), method: :put if item.may_start? %></td>
+            <td><%= button_to 'Pause', admin_item_pause_path(item.id), method: :put if item.may_pause? %></td>
+            <td><%= button_to 'End', admin_item_end_path(item.id), method: :put if item.may_end? %></td>
+            <td><%= button_to 'Cancel', admin_item_cancel_path(item.id), method: :put if item.may_cancel? %></td>
+            <td><%= link_to 'Edit', edit_admin_item_path(item), class: "btn btn-outline-secondary" %></td>
+            <td><%= button_to 'Delete', admin_item_path(item), method: :delete, :onclick => "return confirm('Are you sure you want to delete?')", class: "btn btn-outline-danger" %></td>
+          </tr>
+          </tbody>
+        <% end %>
+      </table>
+      <%= link_to 'New Item', new_admin_item_path, class: "btn btn-dark float-end" %>
     </div>
   </div>
 </div>
