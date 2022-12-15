@@ -10,7 +10,7 @@ class Item < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
-  enum status: { Inactive: 0, Active: 1 }
+  enum status: { inactive: 0, active: 1 }
 
   def destroy
     update(deleted_at: Time.current)
@@ -25,7 +25,7 @@ class Item < ApplicationRecord
     state :starting, :paused, :ended, :cancelled
 
     event :start do
-      transitions from: [:pending, :cancelled, :ended], to: :starting, after: :total_batch, guard: [:quantity_not_negative?, :offline?, :Active?]
+      transitions from: [:pending, :cancelled, :ended], to: :starting, after: :total_batch, guard: [:quantity_not_negative?, :offline?, :active?]
       transitions from: :paused, to: :starting
     end
 
