@@ -12,7 +12,6 @@ Rails.application.routes.draw do
       resources :addresses
       resources :invite_people, only: :index
       resources :lottery, only: :index
-
     end
   end
 
@@ -25,7 +24,7 @@ Rails.application.routes.draw do
         put :start, :pause, :end, :cancel
       end
       resources :categories
-
+      resources :bets
     end
   end
 

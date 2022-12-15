@@ -7,18 +7,25 @@ class Item < ApplicationRecord
   validates :online_at, presence: true
   validates :start_at, presence: true
   validates :status, presence: true
+  before_destroy
 
   mount_uploader :image, ImageUploader
 
   enum status: { inactive: 0, active: 1 }
 
-  def destroy
-    update(deleted_at: Time.current)
-  end
-
   has_many :categories
   has_many :item_category_ships
   has_many :categories, through: :item_category_ships
+  has_many :bets
+
+  def destroy
+    unless bets.present?
+      update(deleted_at: Time.current)
+      flash[:notice] = "Cannot Delete"
+    end
+  end
+
+
 
   aasm column: :state do
     state :pending, initial: true
