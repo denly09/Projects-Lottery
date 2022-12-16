@@ -14,8 +14,8 @@ class Admin::ItemsController < AdminController
   def create
     @item = Item.new(item_params)
     if @item.save
-      flash[:notice] = 'Successfully saved'
       redirect_to admin_items_path
+      flash[:notice] = 'Successfully saved'
     else
       render :new
     end
@@ -26,6 +26,7 @@ class Admin::ItemsController < AdminController
   def update
     if @item.update(item_params)
       redirect_to admin_items_path
+      flash[:notice] = "Successfully update"
     else
       render :edit
     end
@@ -34,10 +35,11 @@ class Admin::ItemsController < AdminController
   def destroy
      @item.destroy
      if @item.deleted_at
+       redirect_to admin_items_path
        flash[:notice] = "Successfully Deleted"
      else
+       redirect_to admin_items_path
        flash[:alert] = "The item cannot be delete"
-      redirect_to admin_items_path
     end
   end
 
@@ -45,20 +47,21 @@ class Admin::ItemsController < AdminController
     # render json: params
     if @item.may_start?
       @item.start!
-      flash[:notice] = "Do you want to start?"
       redirect_to admin_items_path
+      flash[:notice] = "Do you want to start?"
     else
-    flash[:notice] = "You cannot start"
     redirect_to admin_items_path
+    flash[:alert] = "You cannot start"
     end
   end
 
   def pause
     if @item.may_pause?
       @item.pause!
+      redirect_to admin_items_path
       flash[:notice] = "Would you like pause?"
     else
-      flash[:notice] = "You cannot pause"
+      flash[:alert] = "You cannot pause"
       redirect_to admin_items_path
     end
   end
@@ -66,20 +69,22 @@ class Admin::ItemsController < AdminController
   def end
     if @item.may_end?
       @item.end!
+      redirect_to admin_items_path
       flash[:notice] = "Would you like to end?"
     else
-      flash[:notice] = "You cannot end"
       redirect_to admin_items_path
+      flash[:alert] = "You cannot end"
+
     end
   end
 
   def cancel
     if @item.may_cancel?
       @item.cancel!
-      flash[:notice] = "Would you like to cancel?"
+      flash[:notice] = "Item cancelled"
     else
-      flash[:notice] = "You cannot cancel"
       redirect_to admin_items_path
+      flash[:alert] = "Item Cancelled"
     end
   end
 
