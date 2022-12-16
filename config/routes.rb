@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     namespace :users, path: '' do
       resources :addresses
       resources :invite_people, only: :index
-      resources :lottery, only: :index
+      resources :lottery
     end
   end
 

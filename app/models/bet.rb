@@ -3,7 +3,7 @@ class Bet < ApplicationRecord
   belongs_to :item
   belongs_to :user
   after_validation :coins_not_enough?, :minimum_bets?
-  after_create :assign_serial_number, :deduct_coins, :refund_coins
+  after_create :assign_serial_number, :deduct_coins
 
   aasm column: :state do
     state :betting, initial: true
@@ -18,7 +18,7 @@ class Bet < ApplicationRecord
     end
 
     event :cancel do
-      transitions from: :betting, to: :cancelled
+      transitions from: :betting, to: :cancelled, after: :refund_coins
     end
   end
 
@@ -47,6 +47,6 @@ class Bet < ApplicationRecord
     if self.user.coins < self.item.minimum_bets
       errors.add(:base, "You don't have enough coins!")
     end
-
   end
+
 end
