@@ -2,6 +2,7 @@ class Bet < ApplicationRecord
   include AASM
   belongs_to :item
   belongs_to :user
+  has_many :winners
   after_validation :coins_not_enough?
   after_create :assign_serial_number, :deduct_coins
 

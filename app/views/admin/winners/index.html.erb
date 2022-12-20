@@ -1,0 +1,62 @@
+<div class="container">
+  <%= form_tag({ url: admin_winners_path }, method: :get) do %>
+    <div class="row">
+      <div class="col-12">
+        <%= label_tag :serial_number %>
+        <%= text_field_tag :serial_number, params[:serial_number], class: 'form-control' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <%= label_tag :email %>
+        <%= text_field_tag :email, params[:email], class: 'form-control' %>
+      </div>
+      <div class="col-6">
+        <%= label_tag :state %>
+        <%= select_tag :state, options_for_select(Winner.aasm.states.map(&:name), params[:state]), { prompt: "Select State", class: 'form-control' } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <%= label_tag :create_date %>
+        <%= date_field_tag :created_at, params[:created_at], class: 'form-control' %>
+      </div>
+      <div class="col-6">
+        <%= label_tag :end_date %>
+        <%= date_field_tag :ended_at, params[:ended_at], class: 'form-control' %>
+      </div>
+    </div>
+    <%= submit_tag :Search, class: 'btn btn-dark mt-2' %><%= link_to "Cancel", admin_winners_path, class: 'mx-2 btn btn-dark mt-2' %>
+  <% end %>
+  <hr>
+  <div style="overflow: auto;">
+    <div class="card-body">
+      <table class="table table-hover table-primary text-center">
+        <th>Serial Number</th>
+        <th>Email</th>
+        <th>State</th>
+        <th>Date</th>
+        <th>Action</th>
+        <% @winners.each do |winner| %>
+          <tbody>
+          <tr>
+            <td><%= winner.bet.serial_number %></td>
+            <td><%= winner.user.email %></td>
+            <td><%= winner.state %></td>
+            <td><%= winner.created_at %></td>
+            <% if winner.may_submit? %>
+              <td><%= button_to "Submit", admin_winner_submit_path(winner), method: :put, class: 'btn btn-warning' %></td>
+            <% end %>
+            <% if winner.may_pay? %>
+              <td><%= button_to "Pay", admin_winner_pay_path(winner), method: :put, class: 'btn btn-warning' %></td>
+            <% end %>
+            <% if winner.may_ship? %>
+              <td><%= button_to "Ship", admin_winner_ship_path(winner), method: :put, class: 'btn btn-warning' %></td>
+            <% end %>
+        <% end %>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

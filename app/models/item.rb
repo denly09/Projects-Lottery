@@ -17,6 +17,7 @@ class Item < ApplicationRecord
   has_many :item_category_ships
   has_many :categories, through: :item_category_ships
   has_many :bets
+  has_many :winners
 
   def destroy
     unless bets.present?
