@@ -25,8 +25,6 @@ class Item < ApplicationRecord
     end
   end
 
-
-
   aasm column: :state do
     state :pending, initial: true
     state :starting, :paused, :ended, :cancelled
@@ -44,7 +42,7 @@ class Item < ApplicationRecord
       transitions from: :starting, to: :ended
     end
 
-    event :cancel do
+    event :cancel, after: [:bet_cancel, :return_quantity] do
       transitions from: [:starting, :paused], to: :cancelled
     end
   end
@@ -61,4 +59,11 @@ class Item < ApplicationRecord
     offline_at > Time.current
   end
 
+  def bet_cancel
+    bets.where(batch_count: batch_count).where.not(state: :cancelled).each{|bet| bet.cancel!}
+  end
+
+  def return_quantity
+    self.update!(quantity: self.quantity + 1 )
+  end
 end

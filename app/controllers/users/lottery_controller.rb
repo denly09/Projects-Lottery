@@ -1,7 +1,6 @@
 class Users::LotteryController < ApplicationController
   before_action :authenticate_user!, except: :index
-  before_action :set_item, only:  :create
-
+  before_action :set_item, only: :show
 
   def index
     @items = Item.where(status: :active, state: :starting)
@@ -11,20 +10,21 @@ class Users::LotteryController < ApplicationController
 
   def show
     @bet = Bet.new
-    @item = Item.find(params[:id])
     @user_bet = @item.bets.where(user: current_user, batch_count: @item.batch_count, item: @item)
   end
 
   def create
     @count_bet = params[:bet][:coins].to_i
-    params[:bet][:coins] == 1
+    params[:bet][:coins] = 1
     @count_bet.times {
-      @bet =Bet.new(bet_params)
+      @bet = Bet.new(bet_params)
       @bet.user = current_user
-      @bet.batch_count = @item.batch_count
-      @bet.save! }
+      @bet.item = Item.find(params[:item_id])
+      @bet.batch_count = @bet.item.batch_count
+      @bet.save!
+    }
     flash[:notice] = 'Successfully Bet!'
-    redirect_to users_lottery_path(@item)
+    redirect_to users_lottery_path(@bet.item)
   end
 
   private
@@ -34,7 +34,6 @@ class Users::LotteryController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:item_id])
+    @item = Item.find(params[:id])
   end
-
-  end
+end

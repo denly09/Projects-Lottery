@@ -10,7 +10,7 @@ class Admin::BetsController < AdminController
   end
 
   def cancel
-    if @bet.may_cancle?
+    if @bet.may_cancel?
       @bet.cancel!
       redirect_to admin_bets_path
     else

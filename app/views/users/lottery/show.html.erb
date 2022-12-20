@@ -1,14 +1,14 @@
-<div class="container mt-5 mb-5">
-  <div class="row d-flex justify-content-center align-items-center">
-    <div class="col-lg-6 mb-3 text-center">
-      <div class="card">
-        <div class="card-body d-flex flex-column">
+<div class="container ">
+  <div class="row mb-lg-5 justify-content-center align-content-center text-center">
+    <div class="col-6">
+      <div class="card mb-2">
+        <div class="card-body ">
           <%= image_tag @item.image.url, width: 600, height: 300, class: "border border-dark-3 rounded-3" %>
         </div>
         <div class="card-footer">
           <%= @item.name %>
           <div class="progress">
-            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar"  aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
       </div>
@@ -23,23 +23,49 @@
               </ul>
             <% end %>
             <div>
-           <%= hidden_field_tag :item_id, @item.id %>
+              <%= hidden_field_tag :item_id, @item.id %>
             </div>
             <div>
-            <% form.label :coins %>
+              <% form.label :coins %>
             </div>
             <div>
-            <%= form.text_field :coins, class: "form-control", placeholder: 'Bet' %>
+              <%= form.text_field :coins, class: "form-control", placeholder: 'Bet' %>
             </div>
-          <div class="mt-3">
-            <%= form.submit 'Submit', class: 'btn btn-warning w-100' %>
-          </div>
+            <div class="mt-3">
+              <%= form.submit 'Submit', class: 'btn btn-warning w-100' %>
+            </div>
         <% end %>
         </div>
-        <div>
-          <% @user_bet.each do |serial_number| %>
-          <%= serial_number.serial_number %>
-          <% end %>
+      </div>
+      <div>
+        <div class="container">
+          <div class="mt-2 w-100">
+            <div class="d-flex justify-content-center align-content-center mb-4">
+              <div class="row w-100">
+                <div class="card ">
+                  <div class="card-body">
+                    <table class="table table-hover table-primary text-center">
+                      <thead>
+                      <th>Item Id</th>
+                      <th>Image</th>
+                      </thead>
+
+                      <% @user_bet.each do |serial_number| %>
+                        <tbody>
+                        <tr>
+                          <td><p><strong>Serial Number:</strong><%= serial_number.serial_number %></p></td>
+                          <td>
+                            <span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= serial_number.state %></span>
+                          </td>
+                        </tr>
+                        </tbody>
+                      <% end %>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

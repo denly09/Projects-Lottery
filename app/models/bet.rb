@@ -2,7 +2,7 @@ class Bet < ApplicationRecord
   include AASM
   belongs_to :item
   belongs_to :user
-  after_validation :coins_not_enough?, :minimum_bets?
+  after_validation :coins_not_enough?
   after_create :assign_serial_number, :deduct_coins
 
   aasm column: :state do
@@ -22,8 +22,6 @@ class Bet < ApplicationRecord
     end
   end
 
-
-
   def assign_serial_number
     number_count = Bet.where(batch_count: item.batch_count, item_id: item.id).count.to_s.rjust(4, '0')
     self.update!(serial_number: "#{Time.current.strftime("%y%m%d")}-#{item.id}-#{item.batch_count}-#{number_count}")
@@ -42,11 +40,4 @@ class Bet < ApplicationRecord
       errors.add(:base, "You don't have enough coins!")
     end
   end
-
-  def minimum_bets?
-    if self.user.coins < self.item.minimum_bets
-      errors.add(:base, "You don't have enough coins!")
-    end
-  end
-
 end
