@@ -67,13 +67,12 @@ class Admin::ItemsController < AdminController
   end
 
   def end
-    if @item.may_end?
-      @item.end!
-      redirect_to admin_items_path
+    if @item.may_end? && @item.end!
       flash[:notice] = "Would you like to end?"
-    else
       redirect_to admin_items_path
-      flash[:alert] = "You cannot end"
+    else
+      flash[:alert] = @item.errors.full_messages.join(', ')
+      redirect_to admin_items_path
 
     end
   end

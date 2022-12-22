@@ -7,7 +7,6 @@ class Item < ApplicationRecord
   validates :online_at, presence: true
   validates :start_at, presence: true
   validates :status, presence: true
-  before_destroy
 
   mount_uploader :image, ImageUploader
 
@@ -40,7 +39,7 @@ class Item < ApplicationRecord
     end
 
     event :end do
-      transitions from: :starting, to: :ended
+      transitions from: :starting, to: :ended, after: :select_winner, guard: :min_bets
     end
 
     event :cancel, after: [:bet_cancel, :return_quantity] do
@@ -66,5 +65,18 @@ class Item < ApplicationRecord
 
   def return_quantity
     self.update!(quantity: self.quantity + 1 )
+  end
+
+  def min_bets
+    bets.where(batch_count: batch_count).count >= self.minimum_bets
+  end
+
+  def  select_winner
+    select_bet = self.bets.where(batch_count: batch_count).all
+    winner = select_bet.sample
+    winner.win!
+    select_bet.where.not(id: winner.id).update(state: :lost)
+    lucky_winner = Winner.new(item_batch_count: winner.batch_count, user: winner.user, item: winner.item, bet: winner)
+    lucky_winner.save!
   end
 end
