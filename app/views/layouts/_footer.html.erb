@@ -4,7 +4,7 @@
       <button class="btn btn-outline-success px-4 mx-1 " type="submit">Share</button>
       <%= link_to "Invite", users_invite_people_path, class: "px-4 mx-1 btn btn-outline-warning" if user_signed_in? %>
       <%= link_to 'Lottery', users_lottery_index_path, class: 'px-4 mx-1 btn btn-outline-warning' %>
-      <%= link_to 'Shop', "#", class: 'px-4 mx-1 btn btn-outline-warning' %>
+      <%= link_to 'Shop', users_shop_index_path, class: 'px-4 mx-1 btn btn-outline-warning'%>
       <%= link_to "Me", me_path, class: "px-4 mx-1 btn btn-outline-warning" if user_signed_in? %>
     </form>
   </div>
