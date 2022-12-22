@@ -1,0 +1,90 @@
+<div class="container">
+  <h2><strong>Order Lists</strong></h2>
+  <div class="card text-center table-responsive">
+    <div class="card-body">
+      <%= form_tag({ url: admin_orders_path }, { method: :get }) do %>
+        <ul class="nav nav-pills nav-justified mt-3 mb-2 text-start">
+          <div class="col-12">
+            <%= label_tag 'Serial Number' %>
+            <%= text_field_tag :serial_number, '', placeholder: "Serial Number", class: "form-control" %>
+          </div>
+
+          <li class="nav-item text-start mx-2 mt-3">
+            <div class="mb-3">
+              <%= label_tag 'Email' %>
+              <%= text_field_tag :user_email, '', placeholder: "Email", class: "form-control" %>
+            </div>
+
+            <div class="mb-3">
+              <%= label_tag 'Genre' %>
+              <%= select_tag :genre, options_for_select(Order.genres.keys.map { |key| [key.humanize, key] }, params[:genre]), { prompt: 'Choose Genre', class: "form-control form-select" } %>
+            </div>
+
+          <li class="nav-item text-start mx-2 mt-3">
+            <div class="mb-3">
+              <%= label_tag :state %>
+              <%= select_tag :state, options_for_select(Order.aasm.states.map(&:name)), { prompt: 'Choose State', class: "form-control form-select" } %>
+            </div>
+
+            <div class="mb-3">
+              <%= label_tag 'Offer' %>
+              <%= select_tag :offer, options_for_select(Offer.genres.keys.map { |key| [key.humanize, key] }, params[:offer]), { prompt: 'Choose Offer', class: "form-control form-select" } %>
+            </div>
+
+            <div class="text-center">
+              <%= submit_tag :Search, class: "btn btn-info mt-2" %>
+              <%= link_to "Cancel", admin_offers_path, class: 'mx-2 btn btn-info mt-2' %>
+            </div>
+          </li>
+
+          <li class="nav-item text-start mx-2 mt-3">
+
+            <div class="mb-3">
+              <%= label_tag 'Create Date' %>
+              <%= datetime_field_tag :create_at, '', class: "form-control", value: params[:create_at] %>
+            </div>
+
+            <div class="mb-3">
+              <%= label_tag 'End Date' %>
+              <%= datetime_field_tag :end, '', class: "form-control", value: params[:end] %>
+            </div>
+
+          </li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+  <table class="table table-hover table-primary text-center mt-3">
+    <thead>
+    <th>Serial_number</th>
+    <th>Email</th>
+    <th>Offer</th>
+    <th>Genre</th>
+    <th>Order </th>
+    <th>Amount</th>
+    <th>Coins</th>
+    <th>State</th>
+    <th>Created_at</th>
+    <th colspan="2">Action</th>
+    </thead>
+    <div class="container">
+      <% @orders.each do |order| %>
+        <div class="table table-warning">
+          <tr>
+            <td><%= order.serial_number %></td>
+            <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= order.offer.name %></span></td>
+            <td><%= order.user&.email %></td>
+            <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= order.genre %></span></td>
+            <td><%= order.name %></td>
+            <td><%= order.amount %></td>
+            <td><%= order.coins %></td>
+            <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= order.state %></span></td>
+            <td><%= order.created_at %></td>
+            <td><%= button_to 'Cancel', admin_order_pay_path(order.id), method: :put, class: 'btn btn-outline-warning' if order.may_pay? %></td>
+            <td><%= button_to 'Cancel', admin_order_cancel_path(order.id), method: :put, class: 'btn btn-outline-warning' if order.may_cancel? %></td>
+          </tr>
+        </div>
+      <% end %>
+    </div>
+  </table>
+</div>

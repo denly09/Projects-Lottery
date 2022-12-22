@@ -5,6 +5,7 @@ class Order < ApplicationRecord
   after_create :assign_serial_number
 
   enum genre: { deposit: 0, increase: 1, deduct: 2, bonus: 3, share: 4 }
+
   aasm column: :state do
     state :pending, initial: true
     state :submitted, :cancelled, :paid

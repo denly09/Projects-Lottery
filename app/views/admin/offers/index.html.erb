@@ -9,7 +9,7 @@
         <%= label_tag :status %>
         <%= select_tag :status, options_for_select(Offer.statuses.keys.map { |key| [key.humanize, key] }, params[:status]), { prompt: 'Choose Status', class: "form-control form-select" } %>
       </div>
-      <div class="float-end">
+      <div class="text-center">
         <%= link_to 'Reset', admin_offers_path, class: 'mx-2 btn btn-warning mt-2' %>
         <%= submit_tag :Search, class: 'mx-2 btn btn-warning mt-2' %>
       </div>

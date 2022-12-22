@@ -32,6 +32,9 @@ Rails.application.routes.draw do
         put :submit, :pay, :ship, :deliver, :publish, :remove_publish
       end
       resources :offers
+      resources :orders do
+        put :pay, :cancel
+      end
     end
   end
 
