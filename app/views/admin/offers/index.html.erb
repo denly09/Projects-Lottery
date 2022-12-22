@@ -1,0 +1,55 @@
+<div class="container">
+  <%= form_tag({ url: admin_winners_path }, method: :get) do %>
+    <div class="row">
+      <div class="col-6">
+        <%= label_tag :genre %>
+        <%= select_tag :genre, options_for_select(Offer.genres.keys.map { |key| [key.humanize, key] }, params[:genre]), { prompt: 'Choose Genre', class: "form-control form-select" } %>
+      </div>
+      <div class="col-6">
+        <%= label_tag :status %>
+        <%= select_tag :status, options_for_select(Offer.statuses.keys.map { |key| [key.humanize, key] }, params[:status]), { prompt: 'Choose Status', class: "form-control form-select" } %>
+      </div>
+      <div class="float-end">
+        <%= link_to 'Reset', admin_offers_path, class: 'mx-2 btn btn-warning mt-2' %>
+        <%= submit_tag :Search, class: 'mx-2 btn btn-warning mt-2' %>
+      </div>
+  <% end %>
+
+  <div class="container mt-5">
+    <h2>Offer List</h2>
+    <div class="card-body">
+      <table class="table table-hover table-primary text-center">
+        <thead>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Genre</th>
+        <th>Status</th>
+        <th>Amount</th>
+        <th>Coin</th>
+        <th colspan="2">Action</th>
+        </thead>
+        <% @offers.each do |offer| %>
+          <tbody>
+          <tr>
+            <td><%= image_tag offer.image.url, width: "70", height: "70", class: "rounded mx-auto d-block mt-lg-3" if offer.image.present? %></td>
+            <td><%= offer.name %></td>
+            <td>
+              <span class="btn btn-warning" style="border-radius: 20px; padding: 0 8px 0 8px"><%= offer.genre %></span>
+            </td>
+            <td><%= offer.amount %></td>
+            <td><%= offer.coin %></td>
+            <td>
+              <span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= offer.status %></span>
+            </td>
+            <td><%= link_to 'Edit', edit_admin_offer_path(offer), class: "btn btn-outline-secondary" %></td>
+            <td><%= button_to 'Delete', admin_offer_path(offer), method: :delete, :onclick => "return confirm('Are you sure you want to delete?')", class: "btn btn-outline-danger" %></td>
+          </tr>
+          </tbody>
+        <% end %>
+      </table>
+      <%= link_to 'New Offer', new_admin_offer_path, class: "btn btn-warning float-end" %>
+    </div>
+  </div>
+  </div>
+</div>
+</div>

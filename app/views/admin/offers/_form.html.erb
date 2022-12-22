@@ -1,0 +1,59 @@
+<div class="card-body">
+  <%= form_with model: offer, url: path, data: { turbo: false } do |form| %>
+    <div class="container">
+      <div class="container  mt-lg-4">
+        <%# if offer.errors.any? %>
+        <!--          <ul>-->
+        <%# offer.errors.each do |error| %>
+        <!--              <li><%#= error.full_message %></li>-->
+        <%# end %>
+        <%# end %>
+        </ul>
+        <div class="card-body">
+          <div class="mb-3">
+            <%= form.label 'Upload Item' %>
+            <%= form.file_field :image, class: "form-control" %>
+          </div>
+          <ul class="nav nav-pills nav-justified mt-3 mb-3 text-start">
+            <li class="nav-item text-start mx-1">
+              <div class="mb-3">
+                <%= form.label 'Name' %>
+                <%= form.text_field :name, class: "form-control", placeholder: 'Enter your name' %>
+              </div>
+
+              <div class="mb-3">
+                <%= form.label 'Genres' %>
+                <%= form.select :genre, Offer.genres.keys.map { |key| [key.humanize, key] }, { prompt: 'Choose Status' }, class: "form-control form-select" %>
+              </div>
+            </li>
+            <li class="nav-item text-start mx-1">
+              <div class="mb-3">
+                <%= form.label 'Amount' %>
+                <%= form.number_field :amount, class: "form-control", placeholder: 'Enter amount' %>
+              </div>
+
+              <div class="mb-3">
+                <%= form.label 'Coin' %>
+                <%= form.number_field :coin, class: "form-control", placeholder: 'Enter coin' %>
+              </div>
+            </li>
+          </ul>
+
+          <div class="mb-3 mx-2">
+            <p>Set status:</p>
+            <% Offer.statuses.keys.each do |status| %>
+                <span style="margin-right: 10px">
+                <%= form.radio_button :status, status %>
+                  <%= form.label status.to_sym %>
+                </span>
+            <% end %>
+          </div>
+          <div class="float-end">
+            <%= form.submit 'Save', class: "btn btn-success px-4" %>
+            <%= link_to 'Cancel', admin_offers_path, class: "btn btn-secondary px-4" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
