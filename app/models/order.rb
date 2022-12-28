@@ -16,19 +16,19 @@ class Order < ApplicationRecord
 
     event :cancel do
       transitions from: [:pending, :submitted], to: :cancelled
-      transitions from: :paid, to: :cancelled, after: [:cancel_deduction, :decrease_total_deposit], guard: :enough_coins
+      transitions from: :paid, to: :cancelled, after: [:cancel_deduction, :decrease_total_deposit], guard: :enough_coins?
     end
 
     event :pay do
-      transitions from: :submitted, to: :paid, after: [:deduct_pay, :increase_total_deposit]
+      transitions from: :submitted, to: :paid, after: [:deduction_pay, :increase_total_deposit]
     end
   end
 
   def deduction_pay
     if deduct?
-      self.user.update(coins: self.user.coins + coins)
+      self.user.update(coins: self.user.coins + self.coins)
     else
-      self.user.update(coins: self.user.coins - coins)
+      self.user.update(coins: self.user.coins - self.coins)
     end
   end
 
@@ -54,7 +54,7 @@ class Order < ApplicationRecord
 
   def assign_serial_number
     number_count = Order.where(user_id: user.id).count.to_s.rjust(4, '0')
-    self.update!(serial_number: "#{Time.current.strftime("%y%m%d")}-#{order.id}-#{user.id}-#{number_count}")
+    self.update!(serial_number: "#{Time.current.strftime("%y%m%d")}-#{id}-#{user.id}-#{number_count}")
   end
 
   def enough_coins?

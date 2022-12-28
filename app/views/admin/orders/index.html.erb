@@ -2,7 +2,7 @@
   <h2><strong>Order Lists</strong></h2>
   <div class="card text-center table-responsive">
     <div class="card-body">
-      <%= form_tag({ url: admin_orders_path }, { method: :get }) do %>
+      <%= form_tag({ url: admin_orders_path }, method: :get , data: { turbo: false }) do %>
         <ul class="nav nav-pills nav-justified mt-3 mb-2 text-start">
           <div class="col-12">
             <%= label_tag 'Serial Number' %>
@@ -48,7 +48,6 @@
               <%= label_tag 'End Date' %>
               <%= datetime_field_tag :end, '', class: "form-control", value: params[:end] %>
             </div>
-
           </li>
       <% end %>
       </ul>
@@ -60,7 +59,6 @@
     <th>Email</th>
     <th>Offer</th>
     <th>Genre</th>
-    <th>Order </th>
     <th>Amount</th>
     <th>Coins</th>
     <th>State</th>
@@ -68,20 +66,19 @@
     <th colspan="2">Action</th>
     </thead>
     <div class="container">
-      <% @orders.each do |order| %>
+      <% @orders&.each do |order| %>
         <div class="table table-warning">
           <tr>
             <td><%= order.serial_number %></td>
             <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= order.offer.name %></span></td>
             <td><%= order.user&.email %></td>
             <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= order.genre %></span></td>
-            <td><%= order.name %></td>
             <td><%= order.amount %></td>
             <td><%= order.coins %></td>
             <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= order.state %></span></td>
             <td><%= order.created_at %></td>
-            <td><%= button_to 'Cancel', admin_order_pay_path(order.id), method: :put, class: 'btn btn-outline-warning' if order.may_pay? %></td>
-            <td><%= button_to 'Cancel', admin_order_cancel_path(order.id), method: :put, class: 'btn btn-outline-warning' if order.may_cancel? %></td>
+            <td><%= button_to 'Pay', admin_order_pay_path(order.id), method: :put, class: 'btn btn-warning' if order.may_pay? %></td>
+            <td><%= button_to 'Cancel', admin_order_cancel_path(order.id), method: :put, :onclick => "return confirm('Are you sure you want to cancel?')", class: 'btn btn-outline-danger' if order.may_cancel? %></td>
           </tr>
         </div>
       <% end %>

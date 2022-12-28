@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :addresses
   has_many :bets
   has_many :winners
+  has_many :orders
 
 
 
