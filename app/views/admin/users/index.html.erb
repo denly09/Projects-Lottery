@@ -1,30 +1,31 @@
 <%= render 'layouts/adminheader' %>
-<h1>Admin User List</h1>
-<table class="table  table-primary text-center table-striped">
-  <thead>
-  <th>Genre</th>
-  <th>Parent</th>
-  <th>E-mail</th>
-  <th>Total Deposit</th>
-  <th>Member Total Deposit</th>
-  <th>Coins</th>
-  <th>Used Coins</th>
-  <th>Children</th>
-  <th>Mobile Number</th>
+<div class="container">
+  <h1>Admin User List</h1>
+  <table class="table  table-primary text-center table-striped">
+    <thead>
+    <th>Genre</th>
+    <th>Parent</th>
+    <th>E-mail</th>
+    <th>Total Deposit</th>
+    <th>Member Total Deposit</th>
+    <th>Coins</th>
+    <th>Used Coins</th>
+    <th>Children</th>
+    <th>Mobile Number</th>
 
-  </thead>
-  <% @users.each do |user| %>
-    <tr>
-      <td><span class="btn btn-warning" style="border-radius: 20px; padding: 0 8px 0 8px"><%= user.role %></span></td>
-      <td><%= user.parent&.email %></td>
-      <td><%= user.email%></td>
-      <td><%= user.total_deposit%></td>
-      <td><%= '#' %></td>
-      <td><%= '#' %></td>
-      <td><%= user.coins %></td>
-      <td><%= user.children_members %></td>
-      <td><%= user.phone_number %></td>
-    </tr>
-
-  <% end %>
-</table>
+    </thead>
+    <% @users.each do |user| %>
+      <tr>
+        <td><span class="btn btn-warning" style="border-radius: 20px; padding: 0 8px 0 8px"><%= user.role %></span></td>
+        <td><%= user.parent&.email %></td>
+        <td><%= user.email %></td>
+        <td><%= user.total_deposit %></td>
+        <td><%=  user.children.sum(&:total_deposit) %></td>
+        <td><%= user.coins %></td>
+        <td><%= user.bets.where.not(state: :cancelled).count %></td>
+        <td><%= user.children_members %></td>
+        <td><%= user.phone_number %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
