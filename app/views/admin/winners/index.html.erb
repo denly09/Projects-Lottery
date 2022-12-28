@@ -33,26 +33,23 @@
     <div class="card-body">
       <table class="table table-hover table-primary text-center">
         <th>Serial Number</th>
+        <th>Item Name</th>
         <th>Email</th>
         <th>State</th>
         <th>Date</th>
-        <th>Action</th>
+        <th colspan="3">Action</th>
         <% @winners.each do |winner| %>
           <tbody>
           <tr>
             <td><%= winner.bet.serial_number %></td>
+            <td><%= winner.item.name %></td>
             <td><%= winner.user.email %></td>
-            <td><%= winner.state %></td>
+            <td><span class="btn btn-success" style="border-radius: 20px; padding: 0 8px 0 8px"><%= winner.state %></td>
             <td><%= winner.created_at %></td>
-            <% if winner.may_submit? %>
-              <td><%= button_to "Submit", admin_winner_submit_path(winner), method: :put, class: 'btn btn-warning' %></td>
-            <% end %>
-            <% if winner.may_pay? %>
-              <td><%= button_to "Pay", admin_winner_pay_path(winner), method: :put, class: 'btn btn-warning' %></td>
-            <% end %>
-            <% if winner.may_ship? %>
-              <td><%= button_to "Ship", admin_winner_ship_path(winner), method: :put, class: 'btn btn-warning' %></td>
-            <% end %>
+            <td>
+              <%= button_to "Submit", admin_winner_submit_path(winner), method: :put, class: 'btn btn-warning' if winner.may_submit? %>
+              <%= button_to "Pay", admin_winner_pay_path(winner), method: :put, class: 'btn btn-warning' if winner.may_pay? %>
+              <%= button_to "Ship", admin_winner_ship_path(winner), method: :put, class: 'btn btn-warning' if winner.may_ship?  %></td>
         <% end %>
         </tr>
         </tbody>
