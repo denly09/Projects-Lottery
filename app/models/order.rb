@@ -26,9 +26,9 @@ class Order < ApplicationRecord
 
   def deduction_pay
     if deduct?
-      self.user.update(coins: self.user.coins + self.coins)
-    else
       self.user.update(coins: self.user.coins - self.coins)
+    else
+      self.user.update(coins: self.user.coins + self.coins)
     end
   end
 
