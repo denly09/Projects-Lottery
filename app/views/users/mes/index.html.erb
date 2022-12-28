@@ -1,0 +1,86 @@
+<div class="container mt-lg-5" xmlns="http://www.w3.org/1999/html">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="card-body m-0">
+      <div class="card rounded-3 bg-secondary">
+        <div class="card-body text-dark">
+          <div class="card">
+            <div class="card-header bg-info text-center ">
+              <h2>Profile</h2>
+            </div>
+            <p><%= image_tag current_user.image.url, width: "150", height: "150", class: "rounded mx-auto d-block mt-lg-3" if current_user.image.present? %></p>
+            <p><strong>Username: </strong><%= current_user.username %></p>
+            <p><strong>Email: </strong><%= current_user.email %></p>
+            <p><strong>Coins: </strong><%= current_user.coins %></p>
+          </div>
+          <div class="container col-8">
+            <ul class="nav nav-pills nav-justified">
+              <li class="nav-item mt-lg-5">
+                <%= link_to "Cash in", "#", class: "btn bg-warning nav-link" %>
+              </li>
+            </ul>
+            <ul class="nav nav-pills nav-justified mt-3">
+              <li class="nav-item">
+                <%= link_to "Edit", edit_user_registration_path, class: "btn  bg-warning nav-link" %>
+              </li>&nbsp;&nbsp;&nbsp;
+              <li class="nav-item">
+                <%= link_to "Address", users_addresses_path, class: "btn bg-warning nav-link" %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="mt-2">
+    <%= link_to "Order History", users_mes_path(filter_by: :orders), class: 'btn btn-outline-warning mx-2' if params[:order] == 'orders' %>
+    <%= link_to "Order History", users_mes_path(filter_by: :orders), class: 'btn btn-warning mx-2' unless params[:order] == 'orders' %>
+    <%= link_to "Lottery History", users_mes_path(filter_by: :lotteries), class: 'btn btn-outline-warning mx-2' if params[:lottery] == 'lotteries' %>
+    <%= link_to "Lottery History", users_mes_path(filter_by: :lotteries), class: 'btn btn-warning mx-2' unless params[:lottery] == 'lotteries' %>
+    <%= link_to "Winner History", users_mes_path(filter_by: :winners), class: 'btn btn-outline-warning mx-2' if params[:winner] == 'winners' %>
+    <%= link_to "Winner History", users_mes_path(filter_by: :winners), class: 'btn btn-warning mx-2' unless params[:winner] == 'winners' %>
+  </div>
+</div>
+<div class="container">
+  <div class="d-grid">
+    <% @orders&.each do |order| %>
+      <div class="card mt-2">
+        <div class="card-body bg-secondary text-info">
+          <span>Serial Number: </span><span class="text-warning"><%= order.serial_number %></span><br>
+          <span>Amount: </span><span class="text-white"><%= order.amount %></span><br>
+          <span>Coins: </span><span class="text-white"><%= order.coins %></span><br>
+          <span>Created at: </span><span class="text-white"><%= order.created_at %></span><br>
+          <span>State: </span><span class="btn btn-warning" style="border-radius: 20px; padding: 0 8px 0 8px"><%= order.state %></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="container">
+  <div class="d-grid">
+    <% @lotteries&.each do |lottery| %>
+      <div class="card mt-2">
+        <div class="card-body bg-secondary text-info">
+          <span>Serial Number: </span><span class="text-warning"><%= lottery.serial_number %></span><br>
+          <span>Item Name: </span><span class="text-warning"><%= lottery.item.name %></span><br>
+          <span>Created at: </span><span class="text-white"><%= lottery.created_at %></span><br>
+          <span>State: </span><span class="btn btn-warning" style="border-radius: 20px; padding: 0 8px 0 8px"><%= lottery.state %></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="d-grid">
+    <% @winners&.each do |winner| %>
+      <div class="card mt-2">
+        <div class="card-body bg-secondary text-info">
+          <span>Serial Number: </span><span class="text-warning"><%= winner.bet.serial_number %></span><br>
+          <span>Item Name: </span><span class="text-warning"><%= winner.item.name %></span><br>
+          <span>Created at: </span><span class="text-white"><%= winner.created_at %></span><br>
+          <span>State: </span><span class="btn btn-warning" style="border-radius: 20px; padding: 0 8px 0 8px"><%= winner.state %></span>
+          <%#= link_to "Claim", users_wi %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%= render 'layouts/footer' %>
